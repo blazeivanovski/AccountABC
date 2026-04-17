@@ -21,12 +21,12 @@ public class CalculationService extends Base {
         return calculateCurrentNumberOfShares(security)  / security.getCurrent() * security.getTargetVariance() * -1;
     }
 
-    @Step("4. Calculate new number of shares for {security.name}")
+    @Step("4. Calculate new total number of shares for {security.name}")
     public static double calculateNewNumberOfShares(Security security) {
         return calculateCurrentNumberOfShares(security) + calculateNumberOfSharesToBuySell(security);
     }
 
-    @Step("5. Calculate new total shares price for {security.name}")
+    @Step("5. Calculate new total price of shares for {security.name}")
     public static double calculateNewTotalSharePrice(Security security) {
         return calculateNewNumberOfShares(security)  * security.getUnitPrice();
     }

@@ -13,7 +13,7 @@ import java.util.List;
 import static com.accountabc.utils.CalculationService.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class AccountParameterizedTest extends Base {
+public class AccountTest extends Base {
 
     static List<Security> securityData() {
         return CsvUtils.readCsv("securities.csv");
@@ -35,7 +35,8 @@ public class AccountParameterizedTest extends Base {
 
         double newTotalSharePriceForSecurity = calculateNewTotalSharePrice(security);
         double targetTotalSharePriceForSecurity = (double) security.getTarget() / 100 * initialTotalAsset;
-        assertEquals(newTotalSharePriceForSecurity, targetTotalSharePriceForSecurity, 0.001, "New Total Price Of Shares is different than target for " + security.getName() + "\nTarget total share price is: " + (double) security.getTarget() / 100 * initialTotalAsset + "\nNew total share price is: " + newTotalSharePriceForSecurity);
+        // 6. Validate if new total price of shares for security (after buying/selling shares) equals expected (target) total price of shares for that security
+        assertEquals(newTotalSharePriceForSecurity, targetTotalSharePriceForSecurity, 0.001, "New Total Price Of Shares is different than target for " + security.getName() + "\nTarget total share price is: " + targetTotalSharePriceForSecurity + "\nNew total share price is: " + newTotalSharePriceForSecurity);
         newAccountAbcTotalAsset += newTotalSharePriceForSecurity;
     }
 
@@ -43,6 +44,5 @@ public class AccountParameterizedTest extends Base {
     static void verifyNewAccountAbcTotalAsset() {
         System.out.println("New AccountABC total asset (after shares buying and selling): " + newAccountAbcTotalAsset);
         assertEquals(newAccountAbcTotalAsset, initialTotalAsset, 0.001, "New AccountABC Total Asset (after buying and selling shares) is different than initial total asset!\nInitial total asset was: " + initialTotalAsset + "\nNew total asset is:" + newAccountAbcTotalAsset);
-        System.out.println("AccountParameterizedTest completed");
     }
 }
