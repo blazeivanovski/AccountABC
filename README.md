@@ -46,15 +46,15 @@ Input: [securities.csv](https://github.com/blazeivanovski/AccountABC/blob/master
 
 Expected output:
 ```
-Number of shares to buy for IBM security is 66.66666666666667
+Number of shares to buy for IBM security is 66.67
 No deviation for MSFT security, no buy or sell action needed
-Number of shares to sell for ORCL security is 45.45454545454546
+Number of shares to sell for ORCL security is 45.45
 No deviation for AAPL security, no buy or sell action needed
 No deviation for HD security, no buy or sell action needed
 
 To get to zero target variance, I have to:
-- buy 66.66666666666667 shares of IBM security 
-- sell 45.45454545454546 shares of ORCL security 
+- buy 66.67 shares of IBM security 
+- sell 45.45 shares of ORCL security 
 
 Zero target variance achieved. Account ABC total assets after buying and selling share: $100000.0
 ```

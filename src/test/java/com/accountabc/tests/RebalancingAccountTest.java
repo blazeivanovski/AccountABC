@@ -27,10 +27,10 @@ public class RebalancingAccountTest extends Base {
     @MethodSource("securityData")
     void validateNumberOfSharesToBuySell(Security security) {
         if (security.getTargetVariance()!= 0) {
-            double numberOfSharesToBuySell =  calculateNumberOfSharesToBuySell(security);
+            double numberOfSharesToBuySell =  Math.abs(calculateNumberOfSharesToBuySell(security));
             String action = ((security.getTargetVariance() < 0)? "buy " : "sell ");
-            zeroVarianceActionsMessage += "\n- " + action + Math.abs(numberOfSharesToBuySell) + " shares of " + security.getName()  + " security ";
-            logInfo("Number of shares to " + action + "for " + security.getName() + " security is " + Math.abs(numberOfSharesToBuySell));
+            zeroVarianceActionsMessage += "\n- " + action + String.format("%.2f", numberOfSharesToBuySell) + " shares of " + security.getName()  + " security ";
+            logInfo("Number of shares to " + action + "for " + security.getName() + " security is " + String.format("%.2f", numberOfSharesToBuySell));
         } else {
             logInfo("No deviation for " + security.getName() + " security, no buy or sell action needed");
         }
@@ -45,6 +45,6 @@ public class RebalancingAccountTest extends Base {
     static void verifyNewAccountAbcTotalAsset() {
         System.out.println("\nTo get to zero target variance, I have to:" + zeroVarianceActionsMessage);
         assertEquals(newAccountAbcTotalAsset, initialTotalAsset, 0.001, "Account ABC total assets after buying and selling shares is different than initial total asset!\nInitial total asset was: " + initialTotalAsset + "\nNew total asset is:" + newAccountAbcTotalAsset);
-        System.out.println("\nZero target variance achieved. Account ABC total assets after buying and selling share: $" + newAccountAbcTotalAsset);
+        System.out.println("\nZero target variance achieved. Account ABC total assets after buying and selling shares: $" + newAccountAbcTotalAsset);
     }
 }
