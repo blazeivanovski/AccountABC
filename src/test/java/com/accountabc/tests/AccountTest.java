@@ -24,10 +24,9 @@ public class AccountTest extends Base {
     @ParameterizedTest
     @Description("Calculate number of shares to buy and sell. Validate if target variance is zero. Verify if total asset is still $100,000 after buying and selling shares.")
     @MethodSource("securityData")
-    void validateSharesPerSecurity(Security security) {
-        double numberOfSharesToBuySell;
+    void validateNumberOfSharesToBuySell(Security security) {
         if (security.getTargetVariance()!= 0) {
-            numberOfSharesToBuySell =  calculateNumberOfSharesToBuySell(security);
+            double numberOfSharesToBuySell =  calculateNumberOfSharesToBuySell(security);
             logInfo("Number of shares to " + ((security.getTargetVariance() < 0)? "buy" : "sell") + " for " + security.getName() + " is " + Math.abs(numberOfSharesToBuySell));
         } else {
             logInfo("No deviation for " + security.getName() + ", no need to buy or sell shares.");
@@ -35,7 +34,6 @@ public class AccountTest extends Base {
 
         double newTotalSharePriceForSecurity = calculateNewTotalSharePrice(security);
         double targetTotalSharePriceForSecurity = (double) security.getTarget() / 100 * initialTotalAsset;
-        // 6. Validate if new total price of shares for security (after buying/selling shares) equals expected (target) total price of shares for that security
         assertEquals(newTotalSharePriceForSecurity, targetTotalSharePriceForSecurity, 0.001, "New Total Price Of Shares is different than target for " + security.getName() + "\nTarget total share price is: " + targetTotalSharePriceForSecurity + "\nNew total share price is: " + newTotalSharePriceForSecurity);
         newAccountAbcTotalAsset += newTotalSharePriceForSecurity;
     }
