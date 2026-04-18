@@ -36,8 +36,8 @@ public class RebalancingAccountTest extends Base {
         }
 
         double newTotalSharesValueForSecurity = calculateNewTotalSharesValue(security);
-        double targetTotalSharesValueForSecurity = (double) security.getTarget() / 100 * initialTotalAsset;
-        assertEquals(newTotalSharesValueForSecurity, targetTotalSharesValueForSecurity, 0.001, "New total shares value is different than target for " + security.getName() + "\nTarget total shares value is: " + targetTotalSharesValueForSecurity + "\nNew total shares value is: " + newTotalSharesValueForSecurity);
+        double newPercentOfTotalAssetsForSecurity = newTotalSharesValueForSecurity / initialTotalAsset * 100;
+        assertEquals(newPercentOfTotalAssetsForSecurity, security.getTarget(), 0.001, "New % of total assets is different than target % of total assets for " + security.getName() + "\nTarget % of total assets is " + security.getTarget() + "\nNew % of total assets is " + newPercentOfTotalAssetsForSecurity);
         newAccountAbcTotalAsset += newTotalSharesValueForSecurity;
     }
 
