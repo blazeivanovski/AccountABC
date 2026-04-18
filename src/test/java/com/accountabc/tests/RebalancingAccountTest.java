@@ -10,7 +10,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.List;
 
-import static com.accountabc.utils.CalculationService.*;
+import static com.accountabc.CalculationService.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class RebalancingAccountTest extends Base {
@@ -35,9 +35,10 @@ public class RebalancingAccountTest extends Base {
             logInfo("No deviation for " + security.getName() + " security, no buy or sell action needed");
         }
 
-        double newTotalSharePriceForSecurity = calculateNewTotalSharePrice(security);
-        validateNewTotalSharePrice(security, newTotalSharePriceForSecurity);
-        newAccountAbcTotalAsset += newTotalSharePriceForSecurity;
+        double newTotalSharesValueForSecurity = calculateNewTotalSharesValue(security);
+        double targetTotalSharesValueForSecurity = (double) security.getTarget() / 100 * initialTotalAsset;
+        assertEquals(newTotalSharesValueForSecurity, targetTotalSharesValueForSecurity, 0.001, "New total shares value is different than target for " + security.getName() + "\nTarget total shares value is: " + targetTotalSharesValueForSecurity + "\nNew total shares value is: " + newTotalSharesValueForSecurity);
+        newAccountAbcTotalAsset += newTotalSharesValueForSecurity;
     }
 
     @AfterAll
