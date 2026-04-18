@@ -18,20 +18,19 @@ Calculate number of shares to buy and sell and verify if total asset is still $1
 ### Test steps
 Repeat these test steps for each security from [securities.csv](https://github.com/blazeivanovski/AccountABC/blob/master/src/main/resources/securities.csv)
 1. Calculate current total price of shares per security<br>
-  [calculateCurrentTotalPriceOfShares](https://github.com/blazeivanovski/AccountABC/blob/a32e22d3728526fb92ad3aaf3d2b61c4890d4952/src/main/java/com/accountabc/utils/CalculationService.java#L10)
+  [calculateCurrentTotalPriceOfShares](https://github.com/blazeivanovski/AccountABC/blob/a32e22d3728526fb92ad3aaf3d2b61c4890d4952/src/main/java/com/accountabc/utils/CalculationService.java#L11)
 2. Calculate current number of shares per security<br>
-  [calculateCurrentNumberOfShares](https://github.com/blazeivanovski/AccountABC/blob/a32e22d3728526fb92ad3aaf3d2b61c4890d4952/src/main/java/com/accountabc/utils/CalculationService.java#L15)
+  [calculateCurrentNumberOfShares](https://github.com/blazeivanovski/AccountABC/blob/a32e22d3728526fb92ad3aaf3d2b61c4890d4952/src/main/java/com/accountabc/utils/CalculationService.java#L16)
 3. Calculate number of shares to buy and sell per security<br>
-  [calculateNumberOfSharesToBuySell](https://github.com/blazeivanovski/AccountABC/blob/a32e22d3728526fb92ad3aaf3d2b61c4890d4952/src/main/java/com/accountabc/utils/CalculationService.java#L20)
+  [calculateNumberOfSharesToBuySell](https://github.com/blazeivanovski/AccountABC/blob/a32e22d3728526fb92ad3aaf3d2b61c4890d4952/src/main/java/com/accountabc/utils/CalculationService.java#L21)
 4. Calculate new total number of shares per security<br>
-  [calculateNewNumberOfShares](https://github.com/blazeivanovski/AccountABC/blob/a32e22d3728526fb92ad3aaf3d2b61c4890d4952/src/main/java/com/accountabc/utils/CalculationService.java#L25)
+  [calculateNewNumberOfShares](https://github.com/blazeivanovski/AccountABC/blob/a32e22d3728526fb92ad3aaf3d2b61c4890d4952/src/main/java/com/accountabc/utils/CalculationService.java#L26)
 5. Calculate new total price of shares per security<br>
-  [calculateNewTotalSharePrice](https://github.com/blazeivanovski/AccountABC/blob/a32e22d3728526fb92ad3aaf3d2b61c4890d4952/src/main/java/com/accountabc/utils/CalculationService.java#L30)
+  [calculateNewTotalSharePrice](https://github.com/blazeivanovski/AccountABC/blob/a32e22d3728526fb92ad3aaf3d2b61c4890d4952/src/main/java/com/accountabc/utils/CalculationService.java#L31)
 6. Validate if new total price of shares for security (after buying/selling shares) equals expected (target) total price of shares for that security<br>
-  [assertEquals(newTotalSharePriceForSecurity, targetTotalSharePriceForSecurity)](https://github.com/blazeivanovski/AccountABC/blob/a32e22d3728526fb92ad3aaf3d2b61c4890d4952/src/test/java/com/accountabc/tests/RebalancingAccountTest.java#L40)
-7. Calculate new AccountABC total asset (after buying and selling shares)<br>
-  [newAccountAbcTotalAsset](https://github.com/blazeivanovski/AccountABC/blob/a32e22d3728526fb92ad3aaf3d2b61c4890d4952/src/test/java/com/accountabc/tests/RebalancingAccountTest.java#L41)
-
+  [validateNewTotalSharePrice](https://github.com/blazeivanovski/AccountABC/blob/a32e22d3728526fb92ad3aaf3d2b61c4890d4952/src/test/java/com/accountabc/tests/RebalancingAccountTest.java#L36)
+7. Calculate new Account ABC total asset (after buying and selling shares)<br>
+  [newAccountAbcTotalAsset](https://github.com/blazeivanovski/AccountABC/blob/a32e22d3728526fb92ad3aaf3d2b61c4890d4952/src/test/java/com/accountabc/tests/RebalancingAccountTest.java#L40)<br><br>
 After iterating through all securities:<br>
 8. Verify if account ABC is still with $100K in total asset<br>
   [verifyNewAccountAbcTotalAsset](https://github.com/blazeivanovski/AccountABC/blob/a32e22d3728526fb92ad3aaf3d2b61c4890d4952/src/test/java/com/accountabc/tests/RebalancingAccountTest.java#L45)
@@ -46,15 +45,16 @@ Input: [securities.csv](https://github.com/blazeivanovski/AccountABC/blob/master
 
 Expected output:
 ```
-Number of shares to buy for IBM security is 66.67
+Number of shares to buy for IBM security is 66.6667
 No deviation for MSFT security, no buy or sell action needed
-Number of shares to sell for ORCL security is 45.45
+Number of shares to sell for ORCL security is 45.4545
 No deviation for AAPL security, no buy or sell action needed
 No deviation for HD security, no buy or sell action needed
 
 To get to zero target variance, I have to:
-- buy 66.67 shares of IBM security 
-- sell 45.45 shares of ORCL security 
+- buy 66.6667 shares of IBM security 
+- sell 45.4545 shares of ORCL security 
 
-Zero target variance achieved. Account ABC total assets after buying and selling share: $100000.0
+Zero target variance achieved.
+Account ABC total assets after buying and selling shares: $100000.0
 ```
