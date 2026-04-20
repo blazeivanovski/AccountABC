@@ -10,7 +10,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.List;
 
-import static com.accountabc.CalculationService.*;
+import static com.accountabc.service.Calculation.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class RebalancingAccountTest extends Base {
