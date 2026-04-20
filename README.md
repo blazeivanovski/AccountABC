@@ -15,17 +15,17 @@ https://github.com/blazeivanovski/AccountABC.git
 Calculate number of shares to buy and sell and verify if total asset is still $100,000 after buying and selling shares.
 
 ### Test steps
-Repeat these test steps for each security from [securities.csv](https://github.com/blazeivanovski/AccountABC/blob/master/src/main/resources/securities.csv)
+Repeat these test steps for each security from [securities.csv](https://github.com/blazeivanovski/AccountABC/blob/master/src/test/resources/securities.csv)
 1. Calculate current total price of shares per security<br>
-  [calculateCurrentTotalSharesValue](https://github.com/blazeivanovski/AccountABC/blob/master/src/test/java/com/accountabc/service/CalculationService.java#L9)
+  [calculateCurrentTotalSharesValue](https://github.com/blazeivanovski/AccountABC/blob/master/src/test/java/com/accountabc/service/Calculation.java#L9)
 2. Calculate current number of shares per security<br>
-  [calculateCurrentNumberOfShares](https://github.com/blazeivanovski/AccountABC/blob/master/src/test/java/com/accountabc/service/CalculationService.java#L13)
+  [calculateCurrentNumberOfShares](https://github.com/blazeivanovski/AccountABC/blob/master/src/test/java/com/accountabc/service/Calculation.java#L13)
 3. Calculate number of shares to buy and sell per security<br>
-  [calculateNumberOfSharesToBuySell](https://github.com/blazeivanovski/AccountABC/blob/master/src/test/java/com/accountabc/service/CalculationService.java#L17)
+  [calculateNumberOfSharesToBuySell](https://github.com/blazeivanovski/AccountABC/blob/master/src/test/java/com/accountabc/service/Calculation.java#L17)
 4. Calculate new total number of shares per security<br>
-  [calculateNewNumberOfShares](https://github.com/blazeivanovski/AccountABC/blob/master/src/test/java/com/accountabc/service/CalculationService.java#L21)
+  [calculateNewNumberOfShares](https://github.com/blazeivanovski/AccountABC/blob/master/src/test/java/com/accountabc/service/Calculation.java#L21)
 5. Calculate new total price of shares per security<br>
-  [calculateNewTotalSharesValue](https://github.com/blazeivanovski/AccountABC/blob/master/src/test/java/com/accountabc/service/CalculationService.java#L25)
+  [calculateNewTotalSharesValue](https://github.com/blazeivanovski/AccountABC/blob/master/src/test/java/com/accountabc/service/Calculation.java#L25)
 6. Validate if new % of total assets for security (after buying/selling shares) equals target % of total assets for that security<br>
   [assertEquals(newPercentOfTotalAssetsForSecurity, security.getTarget())](https://github.com/blazeivanovski/AccountABC/blob/master/src/test/java/com/accountabc/tests/RebalancingAccountTest.java#L41)
 7. Calculate Account ABC's new total asset (after buying and selling shares)<br>
