@@ -1,12 +1,13 @@
 package com.accountabc.service;
 
-import com.accountabc.Base;
 import com.accountabc.model.Security;
 
-public class Calculation extends Base {
+import static com.accountabc.utils.Constants.TOTAL_ASSET;
+
+public class Calculation {
 
     public static double calculateCurrentTotalSharesValue(Security security) {
-        return (double) security.getCurrent() / 100 * initialTotalAsset;
+        return (double) security.getCurrent() / 100 * TOTAL_ASSET;
     }
 
     public static double calculateCurrentNumberOfShares(Security security) {
