@@ -7,11 +7,13 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import static com.accountabc.service.Calculation.*;
-import static com.accountabc.utils.Constants.TOTAL_ASSET;
+import static com.accountabc.utils.Constants.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class RebalancingAccountTest {
 
@@ -20,33 +22,38 @@ public class RebalancingAccountTest {
     }
 
     private static String zeroVarianceActionsMessage = "";
-    private static double newAccountAbcTotalAsset = 0;
+    private static BigDecimal actualAccountAbcTotalAsset = BigDecimal.ZERO;
 
     @ParameterizedTest
-    @Description("Calculate number of shares to buy and sell")
+    @Description("Verify the rebalancing trade and resulting asset allocation for a security")
     @MethodSource("securityData")
-    void validateNumberOfSharesToBuySell(Security security) {
-        if (security.getTargetVariance()!= 0) {
-            double numberOfSharesToBuySell =  Math.abs(calculateNumberOfSharesToBuySell(security));
-            String action = ((security.getTargetVariance() < 0)? "buy " : "sell ");
-            zeroVarianceActionsMessage += "\n- " + action + String.format("%.4f", numberOfSharesToBuySell) + " shares of " + security.getName()  + " security ";
-            System.out.println("Number of shares to " + action + "for " + security.getName() + " security is " + String.format("%.4f", numberOfSharesToBuySell));
+    void verifyRebalancingTrade(Security security) {
+        if (security.getTargetVariance().compareTo(BigDecimal.ZERO) != 0) {
+            BigDecimal tradeQuantity = calculateNumberOfSharesToTrade(security).abs();
+            String action = ((security.getTargetVariance().compareTo(BigDecimal.ZERO) < 0) ? "buy " : "sell ");
+            zeroVarianceActionsMessage += "\n- " + action + tradeQuantity + " shares of " + security.getName()  + " security ";
+            System.out.println("Number of shares to " + action + "for " + security.getName() + " security is " + tradeQuantity);
         } else {
             System.out.println("No deviation for " + security.getName() + " security, no buy or sell action needed");
 
         }
 
-        double newTotalSharesValueForSecurity = calculateNewTotalSharesValue(security);
-        double newPercentOfTotalAssetsForSecurity = newTotalSharesValueForSecurity / TOTAL_ASSET * 100;
-        assertEquals(security.getTarget(), newPercentOfTotalAssetsForSecurity, 0.001, "New % of total assets is different than target % of total assets for " + security.getName() + "\nTarget % of total assets is " + security.getTarget() + "\nNew % of total assets is " + newPercentOfTotalAssetsForSecurity);
-        newAccountAbcTotalAsset += newTotalSharesValueForSecurity;
+        BigDecimal actualTotalValueForSecurity = calculateActualTotalValue(security);
+        BigDecimal actualPercentOfTotalAssetsForSecurity = actualTotalValueForSecurity.divide(TOTAL_ASSET, SCALE, ROUNDING).multiply(BigDecimal.valueOf(100));
+        assertEquals(0, security.getTarget().compareTo(actualPercentOfTotalAssetsForSecurity),
+                "Actual % of total assets is different than target % of total assets for " + security.getName() + "\nTarget % of total assets is " + security.getTarget() + "\nActual % of total assets is " + actualPercentOfTotalAssetsForSecurity.stripTrailingZeros().toPlainString());
+        actualAccountAbcTotalAsset = actualAccountAbcTotalAsset.add(actualTotalValueForSecurity);
     }
 
     @AfterAll
     @Description("Verify if total asset is still $100,000 after buying and selling shares")
-    static void verifyNewAccountAbcTotalAsset() {
+    static void verifyActualAccountAbcTotalAsset() {
         System.out.println("\nTo get to zero target variance, I have to:" + zeroVarianceActionsMessage);
-        assertEquals(TOTAL_ASSET, newAccountAbcTotalAsset, 0.001, "Account ABC total assets after buying and selling shares is different than initial total asset!\nInitial total asset was: " + TOTAL_ASSET + "\nNew total asset is: " + newAccountAbcTotalAsset);
-        System.out.println("\nZero target variance achieved.\nAccount ABC total assets after buying and selling shares: $" + newAccountAbcTotalAsset);
+        actualAccountAbcTotalAsset = actualAccountAbcTotalAsset.setScale(2, ROUNDING);
+        BigDecimal totalAssetDiff = TOTAL_ASSET.subtract(actualAccountAbcTotalAsset).abs();
+
+        assertTrue(totalAssetDiff.compareTo(BigDecimal.valueOf(0.01)) <= 0,
+                "Initial and actual Account ABC total assets differ by more than 0.01!\nInitial total asset: " + TOTAL_ASSET + "\nActual total asset (after trading): " + actualAccountAbcTotalAsset + "\nDifference: " + totalAssetDiff);
+        System.out.println("\nZero target variance achieved.\nAccount ABC total assets after buying and selling shares: $" + actualAccountAbcTotalAsset.setScale(0, ROUNDING));
     }
 }

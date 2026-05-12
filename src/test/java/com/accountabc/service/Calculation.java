@@ -2,27 +2,36 @@ package com.accountabc.service;
 
 import com.accountabc.model.Security;
 
-import static com.accountabc.utils.Constants.TOTAL_ASSET;
+import java.math.BigDecimal;
+
+import static com.accountabc.utils.Constants.*;
 
 public class Calculation {
 
-    public static double calculateCurrentTotalSharesValue(Security security) {
-        return (double) security.getCurrent() / 100 * TOTAL_ASSET;
+    public static BigDecimal calculateCurrentTotalValue(Security security) {
+        return security.getCurrent()
+                .divide(BigDecimal.valueOf(100), SCALE, ROUNDING)
+                .multiply(TOTAL_ASSET);
     }
 
-    public static double calculateCurrentNumberOfShares(Security security) {
-        return calculateCurrentTotalSharesValue(security) / security.getUnitPrice();
+    public static BigDecimal calculateCurrentNumberOfShares(Security security) {
+        return calculateCurrentTotalValue(security)
+                .divide(security.getUnitPrice(), SCALE, ROUNDING);
     }
 
-    public static double calculateNumberOfSharesToBuySell(Security security) {
-        return calculateCurrentNumberOfShares(security)  / security.getCurrent() * security.getTargetVariance() * -1;
+    public static BigDecimal calculateNumberOfSharesToTrade(Security security) {
+        return calculateCurrentNumberOfShares(security)
+                .multiply(security.getTargetVariance()).negate()
+                .divide(security.getCurrent(), SCALE, ROUNDING);
     }
 
-    public static double calculateNewNumberOfShares(Security security) {
-        return calculateCurrentNumberOfShares(security) + calculateNumberOfSharesToBuySell(security);
+    public static BigDecimal calculateActualNumberOfShares(Security security) {
+        return calculateCurrentNumberOfShares(security)
+                .add(calculateNumberOfSharesToTrade(security));
     }
 
-    public static double calculateNewTotalSharesValue(Security security) {
-        return calculateNewNumberOfShares(security)  * security.getUnitPrice();
+    public static BigDecimal calculateActualTotalValue(Security security) {
+        return calculateActualNumberOfShares(security)
+                .multiply(security.getUnitPrice());
     }
 }

@@ -5,6 +5,7 @@ import com.opencsv.CSVReader;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,10 +27,10 @@ public class CsvUtils {
             while ((line = reader.readNext()) != null) {
                 Security security = new Security();
                 security.setName(line[0]);
-                security.setTarget(Integer.parseInt(line[1]));
-                security.setCurrent(Integer.parseInt(line[2]));
-                security.setTargetVariance(Integer.parseInt(line[3]));
-                security.setUnitPrice(Double.parseDouble(line[4]));
+                security.setTarget(new BigDecimal(line[1]));
+                security.setCurrent(new BigDecimal(line[2]));
+                security.setTargetVariance(new BigDecimal(line[3]));
+                security.setUnitPrice(new BigDecimal(line[4]));
                 securities.add(security);
             }
 

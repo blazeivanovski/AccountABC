@@ -2,11 +2,13 @@ package com.accountabc.model;
 
 import lombok.Data;
 
+import java.math.BigDecimal;
+
 @Data
 public class Security {
     private String name;
-    private int target;
-    private int current;
-    private int targetVariance;
-    private double unitPrice;
+    private BigDecimal target;
+    private BigDecimal current;
+    private BigDecimal targetVariance;
+    private BigDecimal unitPrice;
 }
