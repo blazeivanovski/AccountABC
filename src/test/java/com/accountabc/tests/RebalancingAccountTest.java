@@ -41,8 +41,8 @@ public class RebalancingAccountTest {
 
         }
 
-        BigDecimal actualTotalValueForSecurity = calculateActualTotalValue(security); // $20.000
-        BigDecimal actualPercentOfTotalAssetsForSecurity = actualTotalValueForSecurity.divide(TOTAL_ASSET, SCALE, ROUNDING).multiply(BigDecimal.valueOf(100)); // 20%
+        BigDecimal actualTotalValueForSecurity = calculateActualTotalValue(security);
+        BigDecimal actualPercentOfTotalAssetsForSecurity = actualTotalValueForSecurity.divide(TOTAL_ASSET, SCALE, ROUNDING).multiply(BigDecimal.valueOf(100));
         assertEquals(0, security.getTarget().compareTo(actualPercentOfTotalAssetsForSecurity),
                 "Actual % of total assets is different than target % of total assets for " + security.getName() + " security.\nTarget % of total assets is " + security.getTarget() + "\nActual % of total assets is " + actualPercentOfTotalAssetsForSecurity.stripTrailingZeros().toPlainString());
 
