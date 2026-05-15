@@ -22,20 +22,20 @@ Repeat these test steps for each security from [securities.csv](https://github.c
 1. Calculate current total price of shares per security<br>
   [calculateCurrentTotalValue](https://github.com/blazeivanovski/AccountABC/blob/master/src/test/java/com/accountabc/service/Calculation.java#L11)
 2. Calculate current number of shares per security<br>
-  [calculateCurrentNumberOfShares](https://github.com/blazeivanovski/AccountABC/blob/master/src/test/java/com/accountabc/service/Calculation.java#L15)
+  [calculateCurrentNumberOfShares](https://github.com/blazeivanovski/AccountABC/blob/master/src/test/java/com/accountabc/service/Calculation.java#L17)
 3. Calculate number of shares to buy and sell per security<br>
-  [calculateNumberOfSharesToTrade](https://github.com/blazeivanovski/AccountABC/blob/master/src/test/java/com/accountabc/service/Calculation.java#L19)
+  [calculateNumberOfSharesToTrade](https://github.com/blazeivanovski/AccountABC/blob/master/src/test/java/com/accountabc/service/Calculation.java#L22)
 4. Calculate actual total number of shares per security<br>
-  [calculateActualNumberOfShares](https://github.com/blazeivanovski/AccountABC/blob/master/src/test/java/com/accountabc/service/Calculation.java#L23)
+  [calculateActualNumberOfShares](https://github.com/blazeivanovski/AccountABC/blob/master/src/test/java/com/accountabc/service/Calculation.java#L28)
 5. Calculate actual total price of shares per security<br>
-  [calculateActualTotalValue](https://github.com/blazeivanovski/AccountABC/blob/master/src/test/java/com/accountabc/service/Calculation.java#L27)
+  [calculateActualTotalValue](https://github.com/blazeivanovski/AccountABC/blob/master/src/test/java/com/accountabc/service/Calculation.java#L33)
 6. Validate if actual % of total assets for security (after buying/selling shares) equals target % of total assets for that security<br>
-  [assertEquals(0, security.getTarget().compareTo(actualPercentOfTotalAssetsForSecurity)](https://github.com/blazeivanovski/AccountABC/blob/master/src/test/java/com/accountabc/tests/RebalancingAccountTest.java#L43)
-7. Calculate Account ABC's actual total asset (after buying and selling shares)<br>
-  [actualAccountAbcTotalAsset](https://github.com/blazeivanovski/AccountABC/blob/master/src/test/java/com/accountabc/tests/RebalancingAccountTest.java#L45)<br><br>
+  [assertEquals(0, security.getTarget().compareTo(actualPercentOfTotalAssetsForSecurity)](https://github.com/blazeivanovski/AccountABC/blob/master/src/test/java/com/accountabc/tests/RebalancingAccountTest.java#L53)<br>
 After iterating through all securities:<br>
-8. Verify if account ABC is still with $100K in total asset<br>
-  [verifyActualAccountAbcTotalAsset](https://github.com/blazeivanovski/AccountABC/blob/master/src/test/java/com/accountabc/tests/RebalancingAccountTest.java#L50)
+7. Verify if account ABC is still with $100K in total asset<br>
+  [verifyActualAccountAbcTotalAsset](https://github.com/blazeivanovski/AccountABC/blob/master/src/test/java/com/accountabc/tests/RebalancingAccountTest.java#L67)
+8. Calculate Account ABC's actual total asset (after buying and selling shares)<br>
+  [aggregatedTotalAsset](https://github.com/blazeivanovski/AccountABC/blob/master/src/test/java/com/accountabc/tests/RebalancingAccountTest.java#L81)
 
 ### Command to run test 
 `mvn clean test`
