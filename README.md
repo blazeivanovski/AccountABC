@@ -29,10 +29,10 @@ Repeat these test steps for each security from [securities.csv](https://github.c
   [calculateActualNumberOfShares](https://github.com/blazeivanovski/AccountABC/blob/master/src/test/java/com/accountabc/service/Calculation.java#L28)
 5. Calculate actual total price of shares per security<br>
   [calculateActualTotalValue](https://github.com/blazeivanovski/AccountABC/blob/master/src/test/java/com/accountabc/service/Calculation.java#L33)
-6. Validate if actual % of total assets for security (after buying/selling shares) equals target % of total assets for that security<br>
+6. Ensure zero target variance by validating that the actual % of total assets for a security (after buying or selling shares) matches the target % of total assets for that security<br>
   [assertEquals(0, security.getTarget().compareTo(actualPercentOfTotalAssetsForSecurity)](https://github.com/blazeivanovski/AccountABC/blob/master/src/test/java/com/accountabc/tests/RebalancingAccountTest.java#L46)<br><br>
 After iterating through all securities:<br>
-7. Verify if account ABC is still with $100K in total asset - Calculate Account ABC's actual total asset (after buying and selling shares)<br>
+7. Verify that Account ABC still has a total asset value of $100K after buying and selling shares by calculating its actual total assets.<br>
   [verifyActualAccountAbcTotalAsset](https://github.com/blazeivanovski/AccountABC/blob/master/src/test/java/com/accountabc/tests/RebalancingAccountTest.java#L59)
 
 ### Command to run test 
